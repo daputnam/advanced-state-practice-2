@@ -4,13 +4,34 @@ import CarListing from "./components/CarListing";
 class App extends Component {
   constructor() {
     super();
-    this. state = {
+    this.state = {
       currentYear:null,
       currentMake:null,
     };
   }
   render() {
+    console.log(this.props.state.carsForSale);
+
     const {carsForSale,vehicleData,allYears} = this.props.state;
+    let filteredCars = [];
+    if ((this.state.currentMake === null)&&(this.state.currentYear === null)){
+      filteredCars = carsForSale;
+    } else {
+      filteredCars = carsForSale.filter((car)=>{
+        return ((car.year ===  this.state.currentYear)&&(car.make === this.state.currentMake))
+      });
+    }
+    const carListingComponents = filteredCars.map((car)=>{
+      return (<CarListing car={car} />)
+    });
+
+    const selectYear = allYears.map((year)=>{
+      return (<option value={year}>{year}</option>)
+    });
+
+    const selectBrand = vehicleData.map((brand)=>{
+      return (<option value={brand.title}>{brand.value}</option>)
+    });
 
     return (
       <div >
@@ -163,7 +184,8 @@ class App extends Component {
           </div>
         </div>
         <div className="row">
-        <CarListing />
+          {carListingComponents}
+        {/* <CarListing /> */}
         </div>
         <div className="pagination">
           <ul>
@@ -184,16 +206,20 @@ class App extends Component {
           <div className="sidebar_filter">
             <form action="http://themes.webmasterdriver.net/carforyou/demo/listing-grid.html#" method="get">
               <div className="form-group select">
-                <select className="form-control">
+                <select className="form-control" onChange={(e)=>{
+                    this.setState({currentYear:e.target});
+                  }}>
+                  
                   <option>Select Year</option>
-                  <option>2017</option>
+                  {selectYear}
+                  {/* <option>2017</option>
                   <option>2016</option>
                   <option>2015</option>
                   <option>2014</option>
                   <option>2013</option>
                   <option>2012</option>
                   <option>2011</option>
-                  <option>2010</option>
+                  <option>2010</option> */}
                 </select>
               </div>
               <div className="form-group select">
@@ -210,16 +236,19 @@ class App extends Component {
                 </select>
               </div>
               <div className="form-group select">
-                <select className="form-control">
+                <select className="form-control" onChange={(e)=>{
+                    this.setState({currentMake:e.target});
+                  }}>
                   <option>Select Brand</option>
-                  <option>Audi</option>
+                  {selectBrand}
+                  {/* <option>Audi</option>
                   <option>BMW</option>
                   <option>Nissan</option>
                   <option>Toyota</option>
                   <option>Volvo</option>
                   <option>Mazda</option>
                   <option>Mercedes-Benz</option>
-                  <option>Lotus</option>
+                  <option>Lotus</option> */}
                 </select>
               </div>
               <div className="form-group select">

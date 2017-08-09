@@ -1,8 +1,8 @@
 
 ### In CarListing component
-* Add a prop type for a prop called “car” which should be an object and required
-* replace the hard coded information with the data from the car object in props
-* year, make, model, price miles…. etc
+* x Add a prop type for a prop called “car” which should be an object and required
+* x replace the hard coded information with the data from the car object in props
+* x year, make, model, price miles…. etc
 
 ### In App.js find `<div className="form-group select">` that has the “Select Year” drop down
 * Change the hard coded years to use the data from the allYears array
